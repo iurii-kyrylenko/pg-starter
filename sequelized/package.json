@@ -1,0 +1,19 @@
+{
+  "name": "sequelized",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Iurii Kyrylenko",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "dotenv": "^5.0.1",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.37.7"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.4"
+  }
+}
