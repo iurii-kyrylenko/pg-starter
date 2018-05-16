@@ -35,7 +35,7 @@ async function main() {
     console.log('Connection has been established successfully.');
 
     const response = await City.findAll({ limit: 10 });
-    const result = response.map(city => city.dataValues);
+    const result = response.map(city => city.get());
     console.log(result);
   } catch (err) {
     console.error('Unable to connect to the database:', err);
