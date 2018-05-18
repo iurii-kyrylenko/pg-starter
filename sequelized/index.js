@@ -52,6 +52,22 @@ const Country = sequelize.define(
   }
 );
 
+const CountryLanguage = sequelize.define(
+  'countrylanguage',
+  {
+    language: {
+      type: Sequelize.STRING,
+      primaryKey: true
+    },
+    isofficial: Sequelize.BOOLEAN,
+    percentage: Sequelize.FLOAT,
+  },
+  {
+    timestamps: false,
+    tableName: 'countrylanguage'
+  }
+);
+
 Country.belongsTo(City, {
   foreignKey: 'capital'
 });
@@ -60,25 +76,30 @@ City.hasOne(Country, {
   foreignKey: 'capital'
 });
 
-const getCountries = async ({ offset, limit }) => {
+Country.hasMany(CountryLanguage, {
+  foreignKey: 'countrycode'
+});
+
+const getCountries = async ({ offset, limit } = {}) => {
   const response = await Country.findAll({
-    attributes: ['name'],
-    include: [{
-      model: City,
-      attributes: ['name'],
-      // required: true
-    }],
+    attributes: ['name', 'capital'],
+    include: [
+      { model: City, attributes: ['name'] },
+      { model: CountryLanguage, attributes: ['language', 'percentage'] },
+    ],
     offset,
     limit
   });
 
-  return response.map(({ name: country, city }) => {
-    const capital = city && city.get().name || '---'
-    return { country, capital };
+  // return JSON.stringify(response, null, 2);
+  return response.map(({ name: country, city, countrylanguages }) => {
+    const capital = city && city.get().name || '[none]';
+    const languages = countrylanguages.map(({ language, percentage }) => `${language}: ${percentage}%`);
+    return { country, capital, languages };
   });
 };
 
-const getCities = async ({ offset, limit }) => {
+const getCities = async ({ offset, limit } = {}) => {
   const response = await City.findAll({
     attributes: ['name'],
     include: [{
@@ -99,8 +120,9 @@ async function main() {
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
 
-    console.log(await getCountries({ offset: 230, limit: 5 }));
-    console.log(await getCities({ offset: 100, limit: 5 }));
+    console.log(await getCountries({ offset: 220, limit: 15 }));
+    console.log('---------------------');
+    console.log(await getCities({ offset: 100, limit: 15 }));
   } catch (err) {
     console.error('Unable to connect to the database:', err);
   }
