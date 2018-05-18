@@ -115,6 +115,18 @@ const getCities = async ({ offset, limit } = {}) => {
   return response.map(({ name: capital, country: { name: country } }) => ({ capital, country }));
 };
 
+const getRaw = async ({ limit }) => {
+  const response = await sequelize.query(
+    'select language, count(countrycode) from countrylanguage group by language order by count desc limit :limit;',
+    {
+      replacements: { limit },
+      type: sequelize.QueryTypes.SELECT
+    }
+  );
+
+  return JSON.stringify(response, null, 2);
+};
+
 async function main() {
   try {
     await sequelize.authenticate();
@@ -123,6 +135,8 @@ async function main() {
     console.log(await getCountries({ offset: 220, limit: 15 }));
     console.log('---------------------');
     console.log(await getCities({ offset: 100, limit: 15 }));
+    console.log('---------------------');
+    console.log(await getRaw({ limit: 5 }));
   } catch (err) {
     console.error('Unable to connect to the database:', err);
   }
