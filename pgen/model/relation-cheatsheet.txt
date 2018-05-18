@@ -1,0 +1,16 @@
+
+
+City
+----
+has many          country                                  as CountryCapitalFkeys 
+
+
+Country
+-------
+has many          countrylanguage                          as LanguageCountrycodeFkeys 
+belongs to        city                                     as RelatedCapital 
+
+
+Countrylanguage
+---------------
+belongs to        country                                  as RelatedCountrycode 

@@ -1,0 +1,7 @@
+yarn init -y
+
+yarn add pg-generator
+
+./node_modules/.bin/pgen template sequelize -t sequelize-template
+
+./node_modules/.bin/pgen exec sequelize-template -d <db-name> -u <user> -p <password> -h <host> -t model --ssl
