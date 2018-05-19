@@ -80,7 +80,7 @@ Country.hasMany(CountryLanguage, {
   foreignKey: 'countrycode'
 });
 
-const getCountries = async ({ offset, limit } = {}) => {
+const getCountries = async ({ offset, limit }) => {
   const response = await Country.findAll({
     attributes: ['name', 'capital'],
     include: [
@@ -99,7 +99,7 @@ const getCountries = async ({ offset, limit } = {}) => {
   });
 };
 
-const getCities = async ({ offset, limit } = {}) => {
+const getCities = async ({ offset, limit }) => {
   const response = await City.findAll({
     attributes: ['name'],
     include: [{
@@ -131,14 +131,15 @@ async function main() {
   try {
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
-
+    console.log('---------------------');
     console.log(await getCountries({ offset: 220, limit: 15 }));
     console.log('---------------------');
     console.log(await getCities({ offset: 100, limit: 15 }));
     console.log('---------------------');
     console.log(await getRaw({ limit: 5 }));
+    console.log('---------------------');
   } catch (err) {
-    console.error('Unable to connect to the database:', err);
+    console.error('Somethig went wrong:', err);
   }
 };
 
