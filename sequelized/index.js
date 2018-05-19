@@ -72,12 +72,17 @@ Country.belongsTo(City, {
   foreignKey: 'capital'
 });
 
-City.hasOne(Country, {
-  foreignKey: 'capital'
+Country.hasMany(City, {
+  as: 'cities',
+  foreignKey: 'countrycode'
 });
 
 Country.hasMany(CountryLanguage, {
-  foreignKey: 'countrycode'
+  foreignKey: 'countrycode',
+});
+
+City.hasOne(Country, {
+  foreignKey: 'capital'
 });
 
 const getCountries = async ({ offset, limit }) => {
@@ -99,7 +104,7 @@ const getCountries = async ({ offset, limit }) => {
   });
 };
 
-const getCities = async ({ offset, limit }) => {
+const getCapitals = async ({ offset, limit }) => {
   const response = await City.findAll({
     attributes: ['name'],
     include: [{
@@ -113,6 +118,22 @@ const getCities = async ({ offset, limit }) => {
 
   // return JSON.stringify(response, null, 2);
   return response.map(({ name: capital, country: { name: country } }) => ({ capital, country }));
+};
+
+const getCountriesCities = async ({ offset, limit }) => {
+  const response = await Country.findAll({
+    attributes: ['name'],
+    include: [{
+      model: City,
+      as: 'cities',
+      attributes: ['name']
+    }],
+    offset,
+    limit
+  });
+
+  // return JSON.stringify(response, null, 2);
+  return response.map(({ name: country, cities }) => ({ country, cities: cities.map(c => c.name) }));
 };
 
 const getRaw = async ({ limit }) => {
@@ -134,7 +155,9 @@ async function main() {
     console.log('---------------------');
     console.log(await getCountries({ offset: 220, limit: 15 }));
     console.log('---------------------');
-    console.log(await getCities({ offset: 100, limit: 15 }));
+    console.log(await getCapitals({ offset: 100, limit: 15 }));
+    console.log('---------------------');
+    console.log(await getCountriesCities({ offset: 225, limit: 10 }));
     console.log('---------------------');
     console.log(await getRaw({ limit: 5 }));
     console.log('---------------------');
