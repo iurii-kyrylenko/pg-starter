@@ -1,0 +1,23 @@
+Pull offical postgres image:
+> docker pull postgres
+
+Run pg container with running postgres instance (user: postgres):
+> docker run --name pg -e POSTGRES_PASSWORD=super123 -d postgres
+- or -
+Run pg container with running postgres instance (user: postgres)
+and mounted working dir:
+> docker run --name pg -v $(pwd):/mnt -e POSTGRES_PASSWORD=super123 -d postgres
+
+Run bash in pg container:
+> docker exec -it pg bash
+- or -
+Run psql in pg container:
+> docker exec -it pg psql -U postgres
+
+Download sample database:
+http://www.postgresqltutorial.com/postgresql-sample-database/
+- and put it into mnt dir -
+- edit restore.sql: change $$PATH$$ to the absolute file path /mnt/dvdrental --
+
+Run install script in psql:
+> \i /mnt/dvdrental/restore.sql
