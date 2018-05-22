@@ -19,5 +19,7 @@ http://www.postgresqltutorial.com/postgresql-sample-database/
 - and put it into mnt dir -
 - edit restore.sql: change $$PATH$$ to the absolute file path /mnt/dvdrental --
 
+Create db:
+> create database dvdrental;
 Run install script in psql:
 > \i /mnt/dvdrental/restore.sql

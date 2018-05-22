@@ -1,0 +1,130 @@
+\d
+\l
+create database dvdrental;
+\l
+\d
+\i dvdrental/restore.sql
+\l
+\d
+\dt actor
+select * from actor;
+select * from actor where first_name like 'pene%';
+select * from actor where first_name like 'Cris';
+select * from actor where first_name like 'Cris%';
+select * from actor where first_name like "Cris%";
+select * from actor where first_name like Cris%;
+select * from actor where first_name like `Cris%`;
+select * from actor where first_name like 'Cristofer';
+select * from actor where first_name like 'Christopher';
+select * from actor where first_name like 'Christoph%';
+select * from actor where first_name like 'Pene%';
+select * from actor where first_name like 'Brad%';
+select * from actor where first_name like 'Bred%';
+select * from actor where first_name like 'pene%';
+select * from actor where first_name like 'Pene%';
+select * from actor where first_name like 'Th%';
+\q
+\l
+\d
+\dt
+\c
+select * from actor;
+\?
+\dp
+\du
+\q
+\l
+\d
+\c
+\l
+\dt
+\c
+\c dvdrental postgres
+\l
+\d
+\db
+\dS+
+\dn
+\d
+\q
+\d
+\dn
+select * from actor;
+select * from public.actor;
+\dv
+\?
+\dx
+\d
+\d actor
+select rolname from pg_roles;
+\c
+\d
+\l
+\c dvdrental
+\d
+\d+
+\dS+
+\du
+\dt
+\?
+\dS
+\d+
+\l
+\d dvdrental
+\d "actor"
+\d actor
+\dt actor
+\ddp
+\c
+\c postgres
+\ddp
+\d
+\c
+\c pp
+\c dvdrental
+\dn
+\d public
+\d
+\dt
+\dt *.*
+\dn
+\dn+
+\d
+\?
+\dn
+\dg
+SHOW search_path;
+SHOW search_path;
+SHOW search_path;
+select * from dvdrental.actor;
+\c
+\t
+\dt
+\dn
+\l
+\l
+\c
+\z
+\c postgres
+\l
+\d
+\q
+\l
+grant all on dvdrental to postgres
+;
+\d
+grant all on database dvdrental to postgres;
+\l
+\c
+\c dvdrental
+\l
+\d
+\n+
+\dn+
+revoke all on database dvdrental to postgres;
+revoke all on database dvdrental from postgres;
+\l
+\d
+\d+
+select * from actor;
+\s postgres
